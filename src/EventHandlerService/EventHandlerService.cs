@@ -75,7 +75,7 @@ namespace EventHandlerService
             var addEvent = (NotifyDictionaryItemAddedEventArgs<Guid, string>)notifyDictionaryChangedEventArgs;
 
             var proxy = ActorProxy.Create<IMyActor>(new ActorId(addEvent.Key));
-            await proxy.SubscribeAsync<IWakeupCallEvents>(new WakeupCallEventsHandler(Context));
+            await proxy.SubscribeAsync<IWakeupCallEvents>(new WakeupCallEventsHandler());
 
             ServiceEventSource.Current.ServiceMessage(Context, $"Subscribed to event {addEvent.Value} for actor {addEvent.Key}");
         }
