@@ -66,10 +66,10 @@ namespace MyActor
 
         public Task ReceiveReminderAsync(string reminderName, byte[] state, TimeSpan dueTime, TimeSpan period)
         {
-            ActorEventSource.Current.ActorMessage(this, $"Actor {actorId} recieved reminder {reminderName}.");
+            ActorEventSource.Current.Message($"Actor {actorId} recieved reminder {reminderName}.");
 
             var ev = GetEvent<IWakeupCallEvents>();
-            ev.WakeupCall(Encoding.ASCII.GetString(state));
+            ev.WakeupCall(Encoding.ASCII.GetString(state), Id.GetGuidId());
 
             return Task.CompletedTask;
         }
@@ -80,11 +80,15 @@ namespace MyActor
                 Encoding.ASCII.GetBytes(message),
                 dueTime,
                 snoozeTime);
+
+            ActorEventSource.Current.Message($"Subscribed to event {message} for actor {Id.GetGuidId()}");
         }
 
         public async Task DismissWakeupCallAsync(string message, TimeSpan dueTime, TimeSpan snoozeTime)
         {
             await UnregisterReminderAsync(GetReminder(ReminderName));
+
+            ActorEventSource.Current.Message($"Actor {actorId} dismissed event {message}.");
         }
     }
 }

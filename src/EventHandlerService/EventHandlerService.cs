@@ -51,7 +51,7 @@ namespace EventHandlerService
                 await tx.CommitAsync();
             }
 
-            ServiceEventSource.Current.ServiceMessage(Context, $"Reminder {message} created");
+            ServiceEventSource.Current.ServiceMessage(Context, $"Reminder {message} created for actor {actorId}");
 
             return "Reminder created";
         }
@@ -67,7 +67,7 @@ namespace EventHandlerService
             state.DictionaryChanged += StateOnDictionaryChanged;
         }
 
-        private static async void StateOnDictionaryChanged(object sender, NotifyDictionaryChangedEventArgs<Guid, string> notifyDictionaryChangedEventArgs)
+        private async void StateOnDictionaryChanged(object sender, NotifyDictionaryChangedEventArgs<Guid, string> notifyDictionaryChangedEventArgs)
         {
             if(notifyDictionaryChangedEventArgs.Action != NotifyDictionaryChangedAction.Add)
                 return;
@@ -75,7 +75,9 @@ namespace EventHandlerService
             var addEvent = (NotifyDictionaryItemAddedEventArgs<Guid, string>)notifyDictionaryChangedEventArgs;
 
             var proxy = ActorProxy.Create<IMyActor>(new ActorId(addEvent.Key));
-            await proxy.SubscribeAsync<IWakeupCallEvents>(new WakeupCallEventsHandler());
+            await proxy.SubscribeAsync<IWakeupCallEvents>(new WakeupCallEventsHandler(Context));
+
+            ServiceEventSource.Current.ServiceMessage(Context, $"Subscribed to event {addEvent.Value} for actor {addEvent.Key}");
         }
     }
 }
