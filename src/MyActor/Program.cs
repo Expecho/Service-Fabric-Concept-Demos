@@ -19,7 +19,15 @@ namespace MyActor
                 // For more information, see https://aka.ms/servicefabricactorsplatform
 
                 ActorRuntime.RegisterActorAsync<MyActor>(
-                   (context, actorType) => new ActorService(context, actorType)).GetAwaiter().GetResult();
+                   (context, actorType) =>
+                   new ActorService(context, actorType,
+                                settings:
+                                new ActorServiceSettings
+                                {
+                                    ActorGarbageCollectionSettings =
+                                        new ActorGarbageCollectionSettings(20, 15)
+                                }))
+                    .GetAwaiter().GetResult();
 
                 Thread.Sleep(Timeout.Infinite);
             }
