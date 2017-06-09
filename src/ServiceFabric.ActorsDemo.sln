@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.0
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ServiceFabric.ActorsDemo", "ServiceFabric.ActorsDemo\ServiceFabric.ActorsDemo.sfproj", "{3A421966-95C7-4CC0-B6A1-52E042687F09}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyActor.Interfaces", "MyActor.Interfaces\MyActor.Interfaces.csproj", "{798E1950-1F9E-4AE4-911C-68DFA31CD909}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{3ABD3339-5279-4866-AACA-1FFB6EFCCDC8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHandlerService", "EventHandlerService\EventHandlerService.csproj", "{DC403E24-7F37-4F1C-BE42-176EF676CCD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,12 +47,6 @@ Global
 		{3ABD3339-5279-4866-AACA-1FFB6EFCCDC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3ABD3339-5279-4866-AACA-1FFB6EFCCDC8}.Release|x64.ActiveCfg = Release|Any CPU
 		{3ABD3339-5279-4866-AACA-1FFB6EFCCDC8}.Release|x64.Build.0 = Release|Any CPU
-		{DC403E24-7F37-4F1C-BE42-176EF676CCD7}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{DC403E24-7F37-4F1C-BE42-176EF676CCD7}.Debug|x64.ActiveCfg = Debug|x64
-		{DC403E24-7F37-4F1C-BE42-176EF676CCD7}.Debug|x64.Build.0 = Debug|x64
-		{DC403E24-7F37-4F1C-BE42-176EF676CCD7}.Release|Any CPU.ActiveCfg = Release|x64
-		{DC403E24-7F37-4F1C-BE42-176EF676CCD7}.Release|x64.ActiveCfg = Release|x64
-		{DC403E24-7F37-4F1C-BE42-176EF676CCD7}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

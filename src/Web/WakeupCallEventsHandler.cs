@@ -1,7 +1,7 @@
 ﻿using System;
 using MyActor.Interfaces;
 
-namespace EventHandlerService
+namespace Web
 {
     public class WakeupCallEventsHandler : IWakeupCallEvents
     {

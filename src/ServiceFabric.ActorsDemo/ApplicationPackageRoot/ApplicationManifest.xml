@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ServiceFabric.ActorsDemoType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
-    <Parameter Name="EventHandlerService_MinReplicaSetSize" DefaultValue="3" />
-    <Parameter Name="EventHandlerService_PartitionCount" DefaultValue="1" />
-    <Parameter Name="EventHandlerService_TargetReplicaSetSize" DefaultValue="3" />
     <Parameter Name="Web_InstanceCount" DefaultValue="-1" />
     <Parameter Name="MyActorService_PartitionCount" DefaultValue="10" />
     <Parameter Name="MyActorService_MinReplicaSetSize" DefaultValue="3" />
@@ -13,10 +10,6 @@
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
   <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="EventHandlerServicePkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
-  </ServiceManifestImport>
-  <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="WebPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
   </ServiceManifestImport>
@@ -24,11 +17,6 @@
     <ServiceManifestRef ServiceManifestName="MyActorPkg" ServiceManifestVersion="1.0.0" />
   </ServiceManifestImport>
   <DefaultServices>
-    <Service Name="EventHandlerService">
-      <StatefulService ServiceTypeName="EventHandlerServiceType" TargetReplicaSetSize="[EventHandlerService_TargetReplicaSetSize]" MinReplicaSetSize="[EventHandlerService_MinReplicaSetSize]">
-        <UniformInt64Partition PartitionCount="[EventHandlerService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
-      </StatefulService>
-    </Service>
     <Service Name="Web">
       <StatelessService ServiceTypeName="WebType" InstanceCount="[Web_InstanceCount]">
         <SingletonPartition />
