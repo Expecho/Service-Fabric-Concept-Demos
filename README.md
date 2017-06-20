@@ -1,5 +1,5 @@
 # Overview
-This repository contains an Azure Service Fabric application that functions as a  playground for Service Fabric Actors touching Events &amp; Reminders
+This repository contains an Azure Service Fabric application that functions as a demonstration of Service Fabric Actors touching Events &amp; Reminders
 
 The application consist of a stateless services hosting an ASP.Net Core application that acts as an Web Api and an actor service that is being called from the Web Api.
 
