@@ -26,6 +26,7 @@ namespace DemoService
         /// </summary>
         private enum ConfigurationPackageEvent
         {
+            None,
             Added,
             Removed,
             Modified
@@ -68,7 +69,10 @@ namespace DemoService
         /// <returns></returns>
         protected override Task RunAsync(CancellationToken cancellationToken)
         {
-            DumpConfiguration(ConfigurationPackageEvent.Modified, Context.CodePackageActivationContext.GetConfigurationPackageObject("Config"), "values at startup: ");
+            foreach (var configurationPackageName in Context.CodePackageActivationContext.GetConfigurationPackageNames())
+            {
+                DumpConfiguration(ConfigurationPackageEvent.None, Context.CodePackageActivationContext.GetConfigurationPackageObject(configurationPackageName), "values at startup: ");
+            }
             return Task.CompletedTask;
         }
     }
