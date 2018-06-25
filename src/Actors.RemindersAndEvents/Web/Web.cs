@@ -27,11 +27,11 @@ namespace Web
             return new[]
             {
                 new ServiceInstanceListener(serviceContext =>
-                    new WebListenerCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
+                    new HttpSysCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
                     {
-                        ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting WebListener on {url}");
+                        ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting HttpSysCommunicationListener on {url}");
 
-                        return new WebHostBuilder().UseWebListener()
+                        return new WebHostBuilder().UseHttpSys()
                                     .ConfigureServices(
                                         services => services
                                             .AddSingleton(serviceContext))

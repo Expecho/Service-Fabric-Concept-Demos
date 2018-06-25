@@ -66,7 +66,7 @@ namespace MyActor
 
         public Task ReceiveReminderAsync(string reminderName, byte[] state, TimeSpan dueTime, TimeSpan period)
         {
-            ActorEventSource.Current.Message($"Actor {actorId} recieved reminder {reminderName}.");
+            ActorEventSource.Current.Message($"Actor {actorId} recieved reminder {reminderName} that will activate in {dueTime.TotalMinutes} minutes.");
 
             var ev = GetEvent<IWakeupCallEvents>();
             ev.WakeupCall(Encoding.ASCII.GetString(state), Id.GetGuidId());
