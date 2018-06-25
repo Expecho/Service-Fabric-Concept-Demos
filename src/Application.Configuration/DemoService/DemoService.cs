@@ -68,7 +68,7 @@ namespace DemoService
         /// <returns></returns>
         protected override Task RunAsync(CancellationToken cancellationToken)
         {
-            ServiceEventSource.Current.Message("Creating ServiceInstanceListeners");
+            DumpConfiguration(ConfigurationPackageEvent.Modified, Context.CodePackageActivationContext.GetConfigurationPackageObject("Config"), "values at startup: ");
             return Task.CompletedTask;
         }
     }
