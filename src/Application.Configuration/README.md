@@ -10,7 +10,7 @@ This application demonstrates how a service can react on configuration changes. 
 
 ## How to use
 
-### Initial run
+### Initial deployment
 
 When the application is deployed and DemoService is instantiated the configuration is read from [Settings.xml](https://github.com/Expecho/Service-Fabric-Concept-Demos/blob/master/src/Application.Configuration/DemoService/PackageRoot/Config/Settings.xml):
 
@@ -35,7 +35,7 @@ As shown in [the logs](https://docs.microsoft.com/en-us/azure/service-fabric/ser
 
 ### Upgrading the configuration
 
-Change the Settings.xml file and change the value of the parameter, for example 
+Change the [Settings.xml](https://github.com/Expecho/Service-Fabric-Concept-Demos/blob/master/src/Application.Configuration/DemoService/PackageRoot/Config/Settings.xml) file and change the value of the parameter, for example 
 
 ```xml
 <Section Name="MyConfigSection">
