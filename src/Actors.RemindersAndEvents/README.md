@@ -1,6 +1,18 @@
 # Overview
 This repository contains an Azure Service Fabric application that functions as a demonstration of Service Fabric Actors touching Events &amp; Reminders
 
+## Reminders
+From [the docs](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-actors-timers-reminders#actor-reminders):
+
+> Reminders are a mechanism to trigger persistent callbacks on an actor at specified times. Their functionality is similar to timers. But unlike timers, reminders are triggered under all circumstances until the actor explicitly unregisters them or the actor is explicitly deleted. Specifically, reminders are triggered across actor deactivations and failovers because the Actors runtime persists information about the actor's reminders using actor state provider. Please note that the reliability of reminders is tied to the state reliability guarantees provided by the actor state provider. This means that for actors whose state persistence is set to None, the reminders will not fire after a failover. 
+
+## Events
+From [the docs](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-actors-events):
+
+> Actor events provide a way to send best-effort notifications from the actor to the clients. Actor events are designed for actor-to-client communication and shouldn't be used for actor-to-actor communication.
+
+# Demo application
+
 The application consist of a stateless services hosting an ASP.Net Core application that acts as an Web Api and an actor service that is being called from the Web Api.
 
 ![Application Overview](blobs/overview.PNG?raw=true)

@@ -10,7 +10,7 @@ This application demonstrates how a service can react on configuration changes. 
 
 ## How to use
 
-### Initial run
+### Initial deployment
 
 When the application is deployed and DemoService is instantiated the configuration is read from [Settings.xml](https://github.com/Expecho/Service-Fabric-Concept-Demos/blob/master/src/Application.Configuration/DemoService/PackageRoot/Config/Settings.xml):
 
@@ -35,7 +35,7 @@ As shown in [the logs](https://docs.microsoft.com/en-us/azure/service-fabric/ser
 
 ### Upgrading the configuration
 
-Change the Settings.xml file and change the value of the parameter, for example 
+Change the [Settings.xml](https://github.com/Expecho/Service-Fabric-Concept-Demos/blob/master/src/Application.Configuration/DemoService/PackageRoot/Config/Settings.xml) file and change the value of the parameter, for example 
 
 ```xml
 <Section Name="MyConfigSection">
@@ -58,7 +58,7 @@ Next, deploy the application again and change the versions using the [Manifest V
 
 ![Edit Versions](blobs/upgrade-application-settings.png?raw=true)
 
-Observe that the `RunAsync` is not callled. The service instance is not restarted during this upgrade. Instead, the following events are fired and handled:
+After deployment observe that the `RunAsync` is not callled. The service instance is not restarted during this upgrade. Instead, the following events are fired and handled:
 
 ```csharp
 public DemoService(StatelessServiceContext context)
@@ -70,7 +70,7 @@ public DemoService(StatelessServiceContext context)
 }
 ```
 
-The configuration is logged and will show
+The configuration is logged and will show:
 
 | Time | Message|
 -------|--------|
