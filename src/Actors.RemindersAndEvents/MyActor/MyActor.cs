@@ -32,13 +32,11 @@ namespace MyActor
             this.actorId = actorId;
         }
 
-        protected override Task OnPostActorMethodAsync(ActorMethodContext actorMethodContext)
-        {
-            ActorEventSource.Current.ActorMessage(this, $"Actor {actorId} completed call to {actorMethodContext.MethodName}.");
-
-            return Task.CompletedTask;
-        }
-
+        /// <summary>
+        /// Called before a method is invoked on the actor
+        /// </summary>
+        /// <param name="actorMethodContext"></param>
+        /// <returns></returns>
         protected override Task OnPreActorMethodAsync(ActorMethodContext actorMethodContext)
         {
             ActorEventSource.Current.ActorMessage(this, $"Actor {actorId} received call to {actorMethodContext.MethodName}.");
@@ -46,6 +44,22 @@ namespace MyActor
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Called after a method is invoked on the actor
+        /// </summary>
+        /// <param name="actorMethodContext"></param>
+        /// <returns></returns>
+        protected override Task OnPostActorMethodAsync(ActorMethodContext actorMethodContext)
+        {
+            ActorEventSource.Current.ActorMessage(this, $"Actor {actorId} completed call to {actorMethodContext.MethodName}.");
+
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Called when an actor is deactived due to inactivity
+        /// </summary>
+        /// <returns></returns>
         protected override Task OnDeactivateAsync()
         {
             ActorEventSource.Current.ActorMessage(this, $"Actor {actorId} deactivated.");
@@ -55,7 +69,6 @@ namespace MyActor
 
         /// <summary>
         /// This method is called whenever an actor is activated.
-        /// An actor is activated the first time any of its methods are invoked.
         /// </summary>
         protected override Task OnActivateAsync()
         {
@@ -64,7 +77,15 @@ namespace MyActor
             return Task.CompletedTask;
         }
 
-        public Task ReceiveReminderAsync(string reminderName, byte[] state, TimeSpan dueTime, TimeSpan period)
+        /// <summary>
+        /// This method is part of the <see cref="IRemindable"/> interface and is called when te reminder is recieved
+        /// </summary>
+        /// <param name="reminderName">The name of the reminder</param>
+        /// <param name="state">The state as set when the reminder was created</param>
+        /// <param name="dueTime">The period after wich the reminder is due</param>
+        /// <param name="snoozeTime">If the reminder is not unregistered after dueTime it will continue to activate after every specified time</param>
+        /// <returns></returns>
+        public Task ReceiveReminderAsync(string reminderName, byte[] state, TimeSpan dueTime, TimeSpan snoozeTime)
         {
             ActorEventSource.Current.Message($"Actor {actorId} recieved reminder {reminderName} that will activate in {dueTime.TotalMinutes} minutes.");
 
@@ -74,6 +95,13 @@ namespace MyActor
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Register a reminder
+        /// </summary>
+        /// <param name="message">A message passed as state to the reminder so it can be read when the reminder is due</param>
+        /// <param name="dueTime">The period after wich the reminder is due</param>
+        /// <param name="snoozeTime">If the reminder is not unregistered after dueTime it will continue to activate after every specified time</param>
+        /// <returns></returns>
         public async Task CreateWakeupCallAsync(string message, TimeSpan dueTime, TimeSpan snoozeTime)
         {
             await RegisterReminderAsync(ReminderName, 
@@ -81,14 +109,18 @@ namespace MyActor
                 dueTime,
                 snoozeTime);
 
-            ActorEventSource.Current.Message($"Subscribed to event {message} for actor {Id.GetGuidId()}");
+            ActorEventSource.Current.Message($"Registered reminder {ReminderName} with message {message} for actor {Id.GetGuidId()}");
         }
 
-        public async Task DismissWakeupCallAsync(string message, TimeSpan dueTime, TimeSpan snoozeTime)
+        /// <summary>
+        /// Unregister the reminder
+        /// </summary>
+        /// <returns></returns>
+        public async Task DismissWakeupCallAsync()
         {
             await UnregisterReminderAsync(GetReminder(ReminderName));
 
-            ActorEventSource.Current.Message($"Actor {actorId} dismissed event {message}.");
+            ActorEventSource.Current.Message($"Actor {actorId} unregistered reminder {ReminderName}.");
         }
     }
 }

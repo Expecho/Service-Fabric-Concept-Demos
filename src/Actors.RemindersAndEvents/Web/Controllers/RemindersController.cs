@@ -19,19 +19,27 @@ namespace Web.Controllers
         }
 
         // http://localhost:8251/api/Reminders/?message=Hello World&minutes=1&snoozeTime=500000
+        /// <summary>
+        /// Register a reminder using a new actor
+        /// </summary>
+        /// <param name="message">A message passed as state to the reminder so it can be read when the reminder is due</param>
+        /// <param name="minutes">The period in minutes after wich the reminder is due</param>
+        /// <param name="snoozeTime">If the reminder is not unregistered after dueTime it will continue to activate after every specified interval in seconds</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<string> Get(string message, int minutes, int snoozeTime)
         {
-            var actorId = Guid.NewGuid();
-            var proxy = ActorProxy.Create<IMyActor>(new ActorId(actorId));
+            var actorId = ActorId.CreateRandom();
+            var proxy = ActorProxy.Create<IMyActor>(actorId);
             await proxy.CreateWakeupCallAsync(
                 message,
                 TimeSpan.FromMinutes(minutes),
                 TimeSpan.FromSeconds(snoozeTime));
 
+            // Subscibe to the actor event that is raised when the reminder is received
             await proxy.SubscribeAsync<IWakeupCallEvents>(new WakeupCallEventsHandler());
 
-            ServiceEventSource.Current.ServiceMessage(context, $"Reminder {message} created for actor {actorId}");
+            ServiceEventSource.Current.ServiceMessage(context, $"Reminder with message {message} created for actor {actorId.GetLongId()}");
 
             return "Reminder created";
         }

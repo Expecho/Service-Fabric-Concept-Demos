@@ -11,6 +11,6 @@ namespace MyActor.Interfaces
     public interface IMyActor : IActor, IActorEventPublisher<IWakeupCallEvents>
     {
         Task CreateWakeupCallAsync(string message, TimeSpan dueTime, TimeSpan snoozeTime);
-        Task DismissWakeupCallAsync(string message, TimeSpan dueTime, TimeSpan snoozeTime);
+        Task DismissWakeupCallAsync();
     }
 }
