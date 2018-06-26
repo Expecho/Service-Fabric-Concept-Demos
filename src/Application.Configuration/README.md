@@ -58,7 +58,7 @@ Next, deploy the application again and change the versions using the [Manifest V
 
 ![Edit Versions](blobs/upgrade-application-settings.png?raw=true)
 
-Observe that the `RunAsync` is not callled. The service instance is not restarted during this upgrade. Instead, the following events are fired and handled:
+After deployment observe that the `RunAsync` is not callled. The service instance is not restarted during this upgrade. Instead, the following events are fired and handled:
 
 ```csharp
 public DemoService(StatelessServiceContext context)
@@ -70,7 +70,7 @@ public DemoService(StatelessServiceContext context)
 }
 ```
 
-The configuration is logged and will show
+The configuration is logged and will show:
 
 | Time | Message|
 -------|--------|
