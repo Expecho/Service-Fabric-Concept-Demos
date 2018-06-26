@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.ServiceFabric.Actors;
 using MyActor.Interfaces;
 
 namespace Web
@@ -13,7 +13,7 @@ namespace Web
         /// </summary>
         /// <param name="message">The message received from the actor reminder</param>
         /// <param name="actorId">The sending actor</param>
-        public void WakeupCall(string message, Guid actorId)
+        public void WakeupCall(string message, ActorId actorId)
         {
             ServiceEventSource.Current.Message($"Received event {message} from {actorId}");
         }

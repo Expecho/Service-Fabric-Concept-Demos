@@ -30,6 +30,7 @@ namespace MyActor
             : base(actorService, actorId)
         {
             this.actorId = actorId;
+            ActorEventSource.Current.ActorMessage(this, $"Actor {actorId} constructed.");
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace MyActor
 
             return Task.CompletedTask;
         }
-
+        
         /// <summary>
         /// This method is part of the <see cref="IRemindable"/> interface and is called when te reminder is recieved
         /// </summary>
@@ -90,7 +91,7 @@ namespace MyActor
             ActorEventSource.Current.Message($"Actor {actorId} recieved reminder {reminderName} that will activate in {dueTime.TotalMinutes} minutes.");
 
             var ev = GetEvent<IWakeupCallEvents>();
-            ev.WakeupCall(Encoding.ASCII.GetString(state), Id.GetGuidId());
+            ev.WakeupCall(Encoding.ASCII.GetString(state), Id);
 
             return Task.CompletedTask;
         }
@@ -109,7 +110,7 @@ namespace MyActor
                 dueTime,
                 snoozeTime);
 
-            ActorEventSource.Current.Message($"Registered reminder {ReminderName} with message {message} for actor {Id.GetGuidId()}");
+            ActorEventSource.Current.Message($"Registered reminder {ReminderName} with message {message} for actor {Id}");
         }
 
         /// <summary>
